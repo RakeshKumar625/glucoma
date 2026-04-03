@@ -1,0 +1,406 @@
+/* ─── Page Shell ───────────────────────────────────── */
+.pageShell {
+  min-height: calc(100vh - 68px);
+  background: var(--background);
+  padding: 2.5rem 2rem 5rem;
+}
+
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ─── Top Nav ─────────────────────────────────────── */
+.topNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+}
+.backLink:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+.printBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--foreground-2);
+  border: 1.5px solid var(--border);
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius);
+  background: white;
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+.printBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+/* ─── Report Card ─────────────────────────────────── */
+.reportCard {
+  background: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+}
+
+/* ─── Report Top Strip ────────────────────────────── */
+.reportStrip {
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+/* ─── Report Header ───────────────────────────────── */
+.reportHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem 2.5rem;
+  border-bottom: 1px solid var(--border-light);
+  background: #fafbff;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brandIcon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--primary), #1e40af);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+}
+
+.brandName {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--foreground);
+  letter-spacing: -0.3px;
+}
+
+.brandName span { color: var(--primary); }
+
+.brandSub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-top: 2px;
+}
+
+.reportMetaRight {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reportMetaLabel {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.reportMetaValue {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--foreground-2);
+  font-family: 'Courier New', monospace;
+}
+
+/* ─── Patient Info Row ────────────────────────────── */
+.patientRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.patientCell {
+  padding: 1.25rem 1.5rem;
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.patientCell:last-child { border-right: none; }
+
+.patientCellIcon {
+  width: 36px; height: 36px;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.patientCellLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.patientCellValue {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+/* ─── Risk Result Block ──────────────────────────── */
+.resultBlock {
+  padding: 2.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.riskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.riskLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.riskIconWrap {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.riskTitle {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.riskSub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.eyeIndicatorBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 10px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin-left: 1rem;
+  vertical-align: middle;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.confidencePill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid;
+  font-weight: 800;
+}
+
+.confidenceNum {
+  font-size: 2rem;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.confidenceLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.7;
+}
+
+/* Gauge */
+.gaugeWrap {
+  margin-bottom: 2rem;
+}
+
+.gaugeTrack {
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, var(--success-light) 0%, var(--warning-light) 50%, var(--danger-light) 100%);
+  border-radius: var(--radius-full);
+  position: relative;
+  border: 1px solid var(--border);
+  overflow: visible;
+}
+
+.gaugeFill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s cubic-bezier(0.16,1,0.3,1);
+}
+
+.gaugeThumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px; height: 20px;
+  background: white;
+  border-radius: 50%;
+  border: 3px solid;
+  box-shadow: var(--shadow-md);
+  transition: left 1s cubic-bezier(0.16,1,0.3,1);
+}
+
+.gaugeLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.gaugeLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* Findings & Rec */
+.findingsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.findingsBox {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  border: 1px solid var(--border-light);
+}
+
+.findingsBoxTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.findingsBoxTitle svg { color: var(--primary); }
+
+.findingsText {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--foreground-2);
+}
+
+.recBox {
+  border-left: 4px solid;
+  padding-left: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--foreground-2);
+  font-weight: 500;
+}
+
+/* ─── Disclaimer ──────────────────────────────────── */
+.disclaimer {
+  padding: 1.5rem 2.5rem;
+  background: #fafbfc;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.disclaimerIcon { color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+
+.disclaimer p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.disclaimer strong { color: var(--foreground-2); }
+
+/* ─── Print ───────────────────────────────────────── */
+@media print {
+  .topNav     { display: none !important; }
+  .pageShell  { padding: 0; background: white; }
+  .reportCard { box-shadow: none; border: none; border-radius: 0; }
+}
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .reportHeader { flex-direction: column; }
+  .reportMetaRight { text-align: left; }
+  .patientRow { grid-template-columns: 1fr; }
+  .patientCell { border-right: none; border-bottom: 1px solid var(--border-light); }
+  .riskHeader { flex-direction: column; align-items: flex-start; }
+  .findingsGrid { grid-template-columns: 1fr; }
+  .resultBlock { padding: 1.5rem; }
+  .disclaimer { padding: 1.25rem 1.5rem; }
+}
