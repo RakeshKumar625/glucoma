@@ -85,7 +85,7 @@ export default function UploadPage() {
       if (!contentType || !contentType.includes("application/json")) {
         const text = await response.text();
         console.error('Server returned non-JSON:', text);
-        throw new Error('The server did not return a valid JSON response. Please check if the backend is running on port 5000.');
+        throw new Error('The server did not return a valid JSON response. Please check if the backend service is healthy.');
       }
 
       const result = await response.json();

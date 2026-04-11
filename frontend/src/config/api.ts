@@ -7,7 +7,7 @@
 const IS_PROD = process.env.NODE_ENV === 'production';
 
 // In Next.js, environment variables prefixed with NEXT_PUBLIC_ are available in the browser.
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://glucoma.onrender.com';
 
 export const API_ENDPOINTS = {
   PREDICT: `${BACKEND_URL}/predict`,
