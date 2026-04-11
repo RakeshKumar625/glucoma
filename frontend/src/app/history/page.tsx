@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Calendar, ScanLine, ArrowRight, Eye, LayoutDashboard, Activity, AlertTriangle, CheckCircle2, Minus, FileText } from 'lucide-react';
 import styles from './history.module.css';
+import { API_ENDPOINTS } from '@/config/api';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +22,7 @@ interface Scan {
 export default async function HistoryPage() {
   let scans: Scan[] = [];
   try {
-    const res = await fetch('http://localhost:5000/history', { cache: 'no-store' });
+    const res = await fetch(API_ENDPOINTS.HISTORY, { cache: 'no-store' });
     const json = await res.json();
     if (json.success) scans = json.data;
   } catch (e) {

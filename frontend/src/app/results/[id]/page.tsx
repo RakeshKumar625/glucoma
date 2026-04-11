@@ -8,13 +8,14 @@ import {
 import styles from './results.module.css';
 
 import PrintButton from '@/components/PrintButton';
+import { API_ENDPOINTS } from '@/config/api';
 
 export default async function ResultPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   let scan: any = null;
   try {
-    const res = await fetch(`http://localhost:5000/report/${id}`, { cache: 'no-store' });
+    const res = await fetch(API_ENDPOINTS.REPORT(id), { cache: 'no-store' });
     const json = await res.json();
     if (json.success) {
       scan = json.data;
@@ -71,7 +72,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
                 <Activity size={22} color="white" strokeWidth={2.5} />
               </div>
               <div>
-                <div className={styles.brandName}>Glauc<span>AI</span></div>
+                <div className={styles.brandName}>Glaco<span>Vision</span></div>
                 <span className={styles.brandSub}>Automated Retinal Analysis Report</span>
               </div>
             </div>

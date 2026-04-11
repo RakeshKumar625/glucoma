@@ -12,7 +12,7 @@ export default function Navbar() {
             <Activity size={20} color="white" strokeWidth={2.5} />
           </div>
           <div className={styles.logoTextWrap}>
-            <span className={styles.logoText}>Glauc<span>AI</span></span>
+            <span className={styles.logoText}>Glaco<span>Vision</span></span>
             <span className={styles.logoBadge}>Early Detection Platform</span>
           </div>
         </Link>

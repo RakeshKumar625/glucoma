@@ -116,7 +116,7 @@ export default function Home() {
       <section className={styles.featuresSection}>
         <div className={styles.featuresInner}>
           <div className={`${styles.featuresHeader} ${styles.sectionHeader}`}>
-            <span className={styles.sectionTag}>Why GlaucAI</span>
+            <span className={styles.sectionTag}>Why GlacoVision</span>
             <h2 className={styles.sectionTitle}>Built for real clinical use</h2>
             <p className={styles.sectionSubtitle}>A platform trusted by clinicians and accessible to every patient.</p>
           </div>
@@ -144,7 +144,7 @@ export default function Home() {
         <div className={styles.ctaInner}>
           <div className={styles.ctaContent}>
             <h2>Ready to screen your first patient?</h2>
-            <p>GlaucAI is free to try. No sign-up required. Upload a retinal image and get results instantly.</p>
+            <p>GlacoVision is free to try. No sign-up required. Upload a retinal image and get results instantly.</p>
           </div>
           <div className={styles.ctaActions}>
             <Link href="/upload" className={styles.btnWhite}>

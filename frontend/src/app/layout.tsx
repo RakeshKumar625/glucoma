@@ -6,9 +6,9 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "GlaucAI — Early Glaucoma Detection",
+  title: "GlacoVision — Early Glaucoma Detection",
   description: "Clinical-grade AI-powered early glaucoma screening. Upload a retinal image and get a risk report in under 2 seconds.",
-  keywords: ["glaucoma", "AI", "retinal screening", "eye health", "medical AI"],
+  keywords: ["glaucoma", "AI", "retinal screening", "eye health", "medical AI", "GlacoVision"],
 };
 
 export default function RootLayout({

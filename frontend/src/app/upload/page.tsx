@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { UploadCloud, Image as ImageIcon, AlertCircle, Loader2, ArrowRight, ShieldCheck, Zap, Clock, Eye, User, Info, Users, Hash, Calendar as CalendarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import styles from './upload.module.css';
+import { API_ENDPOINTS } from '@/config/api';
 
 const STEPS = ['Uploading images…', 'Verifying fundus integrity…', 'Analyzing both retinas…', 'Aggregating results…', 'Generating combined report…'];
 
@@ -78,7 +79,7 @@ export default function UploadPage() {
       formData.append('patientAge', patientAge);
       formData.append('patientGender', patientGender);
       
-      const response = await fetch('http://localhost:5000/predict', { method: 'POST', body: formData });
+      const response = await fetch(API_ENDPOINTS.PREDICT, { method: 'POST', body: formData });
       
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {

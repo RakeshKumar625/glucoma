@@ -1,4 +1,4 @@
-# GlaucAI - Early Glaucoma Detection System
+# GlacoVision - Early Glaucoma Detection System
 
 This project is a complete, production-style web application for an AI-based glaucoma detection system, split into a modern Frontend and a robust Backend.
 
