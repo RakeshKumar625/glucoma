@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Calendar, ScanLine, ArrowRight, Eye, LayoutDashboard, Activity, AlertTriangle, CheckCircle2, Minus, FileText } from 'lucide-react';
+import { Calendar, ScanLine, ArrowRight, Eye, LayoutDashboard, Activity, AlertTriangle, CheckCircle2, FileText } from 'lucide-react';
 import styles from './history.module.css';
 import { API_ENDPOINTS } from '@/config/api';
 

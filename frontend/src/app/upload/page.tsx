@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { UploadCloud, AlertCircle, Loader2, ArrowRight, Zap, Eye, User, Info, Users, Hash, Calendar as CalendarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import styles from './upload.module.css';
 import { API_ENDPOINTS } from '@/config/api';
 
@@ -88,7 +89,16 @@ export default function UploadPage() {
         throw new Error('The server did not return a valid JSON response. Please check if the backend service is healthy.');
       }
 
-      const result = await response.json();
+      interface AnalysisResponse {
+        success: boolean;
+        data: {
+          leftScanId: string | number;
+          rightScanId: string | number;
+        };
+        error?: string;
+      }
+
+      const result = await response.json() as AnalysisResponse;
       if (!response.ok) throw new Error(result.error || 'Failed to analyze images');
       
       // Redirect to combined report
@@ -226,8 +236,14 @@ export default function UploadPage() {
                 ) : (
                   <div className={styles.previewContainer}>
                     <div className={styles.imageFrame}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={leftPreview} alt="Left eye scan" className={styles.previewImage} />
+                      <Image 
+                        src={leftPreview} 
+                        alt="Left eye scan" 
+                        className={styles.previewImage} 
+                        width={300} 
+                        height={300} 
+                        style={{ objectFit: 'cover' }}
+                      />
                       {isLoading && <div className={styles.scanningOverlay}><div className={styles.scannerLine}></div></div>}
                     </div>
                     <button className={styles.removeBtn} onClick={(e) => { e.stopPropagation(); clearSelection('left'); }}>Remove</button>
@@ -261,8 +277,14 @@ export default function UploadPage() {
                 ) : (
                   <div className={styles.previewContainer}>
                     <div className={styles.imageFrame}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={rightPreview} alt="Right eye scan" className={styles.previewImage} />
+                      <Image 
+                        src={rightPreview} 
+                        alt="Right eye scan" 
+                        className={styles.previewImage} 
+                        width={300} 
+                        height={300} 
+                        style={{ objectFit: 'cover' }}
+                      />
                       {isLoading && <div className={styles.scanningOverlay}><div className={styles.scannerLine}></div></div>}
                     </div>
                     <button className={styles.removeBtn} onClick={(e) => { e.stopPropagation(); clearSelection('right'); }}>Remove</button>

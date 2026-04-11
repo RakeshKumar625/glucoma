@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Zap, Activity, Upload, BarChart3, FileText, Eye, Lock } from 'lucide-react';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -59,10 +60,13 @@ export default function Home() {
             </div>
 
             <div className={styles.scanImageWrap}>
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=700"
                 alt="Retinal Fundus Image"
                 className={styles.heroImage}
+                width={700}
+                height={700}
+                style={{ objectFit: 'cover' }}
               />
               <div className={styles.scannerLine}></div>
               <div className={styles.aiChip}>⚡ AI Running</div>

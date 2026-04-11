@@ -1,9 +1,7 @@
 import Link from 'next/link';
 import { 
-  ChevronLeft, Activity, 
-  User, Calendar, FileText, 
-  AlertTriangle, CheckCircle2, TrendingUp, 
-  Stethoscope, Info, Eye
+  ChevronLeft,
+  AlertTriangle, CheckCircle2, TrendingUp
 } from 'lucide-react';
 import styles from './combined.module.css';
 import PrintButton from '@/components/PrintButton';
@@ -31,13 +29,16 @@ async function getScan(id: string): Promise<Scan | null> {
     if (!contentType || !contentType.includes("application/json")) {
       return null;
     }
-    const json = await res.json();
-    if (json.success && json.data.createdAt) {
-      // Normalize date for JS parsing
-      const rawDate = json.data.createdAt;
-      json.data.createdAt = rawDate.includes(' ') ? rawDate.replace(' ', 'T') + 'Z' : rawDate;
+    const json = await res.json() as { success: boolean, data: Scan };
+    if (json.success && json.data) {
+      if (json.data.createdAt) {
+        // Normalize date for JS parsing
+        const rawDate = json.data.createdAt;
+        json.data.createdAt = rawDate.includes(' ') ? rawDate.replace(' ', 'T') + 'Z' : rawDate;
+      }
+      return json.data;
     }
-    return json.success ? json.data : null;
+    return null;
   } catch {
     return null;
   }

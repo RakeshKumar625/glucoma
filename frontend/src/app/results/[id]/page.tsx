@@ -30,8 +30,8 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
   let scan: Scan | null = null;
   try {
     const res = await fetch(API_ENDPOINTS.REPORT(id), { cache: 'no-store' });
-    const json = await res.json();
-    if (json.success) {
+    const json = await res.json() as { success: boolean, data: Scan };
+    if (json.success && json.data) {
       scan = json.data;
       if (scan.createdAt) {
         scan.createdAt = scan.createdAt.includes(' ') ? scan.createdAt.replace(' ', 'T') + 'Z' : scan.createdAt;
