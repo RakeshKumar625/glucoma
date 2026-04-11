@@ -35,6 +35,9 @@ async function initializeDb() {
     CREATE TABLE IF NOT EXISTS scans (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       patientId TEXT NOT NULL,
+      patientName TEXT,
+      patientAge INTEGER,
+      patientGender TEXT,
       riskLevel TEXT NOT NULL,
       confidenceScore REAL NOT NULL,
       eye TEXT NOT NULL DEFAULT 'left',
@@ -44,13 +47,22 @@ async function initializeDb() {
     )
   `);
 
-  // Migration: Add eye column if it doesn't exist
+  // Migration: Add new columns if they don't exist
   try {
     const columns = await db.all("PRAGMA table_info(scans)");
-    const eyeColumnExists = columns.some(col => col.name === 'eye');
-    if (!eyeColumnExists) {
+    const columnNames = columns.map(col => col.name);
+    
+    if (!columnNames.includes('eye')) {
       await db.exec("ALTER TABLE scans ADD COLUMN eye TEXT NOT NULL DEFAULT 'left'");
-      console.log('Added eye column to scans table');
+    }
+    if (!columnNames.includes('patientName')) {
+      await db.exec("ALTER TABLE scans ADD COLUMN patientName TEXT");
+    }
+    if (!columnNames.includes('patientAge')) {
+      await db.exec("ALTER TABLE scans ADD COLUMN patientAge INTEGER");
+    }
+    if (!columnNames.includes('patientGender')) {
+      await db.exec("ALTER TABLE scans ADD COLUMN patientGender TEXT");
     }
   } catch (err) {
     console.error('Error during migration:', err);
@@ -59,53 +71,71 @@ async function initializeDb() {
   console.log('Database initialized');
 }
 
+// Helper to simulate prediction
+async function getPrediction(eye) {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  const score = Math.floor(Math.random() * 85) + 10;
+  let riskLevel = 'Low Risk';
+  let resultText = 'No significant signs of glaucoma detected.';
+  let recommendation = 'Routine annual check-up recommended.';
+  
+  if (score >= 70) {
+    riskLevel = 'High Risk';
+    resultText = 'Significant indicators of glaucoma detected. Immediate consultation needed.';
+    recommendation = 'Urgent referral to an ophthalmologist for comprehensive evaluation.';
+  } else if (score >= 40) {
+    riskLevel = 'Moderate Risk';
+    resultText = 'Some suspicious structural changes noted in the optic nerve head.';
+    recommendation = 'Schedule a follow-up exam within 3 months with a specialist.';
+  }
+  return { score, riskLevel, resultText, recommendation };
+}
+
 // POST predict
-app.post('/predict', upload.single('image'), async (req, res) => {
+app.post('/predict', upload.fields([
+  { name: 'leftEye', maxCount: 1 },
+  { name: 'rightEye', maxCount: 1 }
+]), async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No image uploaded' });
+    const { patientId, patientName, patientAge, patientGender } = req.body;
+    const files = req.files;
+
+    if (!files.leftEye || !files.rightEye) {
+      return res.status(400).json({ error: 'Both left and right eye images are required' });
     }
 
-    const { eye = 'left' } = req.body;
+    const pid = patientId || `PID-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
 
-    // Simulate AI processing delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Process both eyes
+    const leftResult = await getPrediction('left');
+    const rightResult = await getPrediction('right');
 
-    // Mock AI Prediction
-    const score = Math.floor(Math.random() * 85) + 10;
-    
-    let riskLevel = 'Low Risk';
-    let resultText = 'No significant signs of glaucoma detected.';
-    let recommendation = 'Routine annual check-up recommended.';
-    
-    if (score >= 70) {
-      riskLevel = 'High Risk';
-      resultText = 'Significant indicators of glaucoma detected. Immediate consultation needed.';
-      recommendation = 'Urgent referral to an ophthalmologist for comprehensive evaluation.';
-    } else if (score >= 40) {
-      riskLevel = 'Moderate Risk';
-      resultText = 'Some suspicious structural changes noted in the optic nerve head.';
-      recommendation = 'Schedule a follow-up exam within 3 months with a specialist.';
-    }
+    // Save both results
+    const leftInsert = await db.run(
+      `INSERT INTO scans (patientId, patientName, patientAge, patientGender, riskLevel, confidenceScore, eye, resultText, recommendation)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [pid, patientName, patientAge, patientGender, leftResult.riskLevel, leftResult.score, 'left', leftResult.resultText, leftResult.recommendation]
+    );
 
-    const patientId = `PID-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-    
-    const result = await db.run(
-      `INSERT INTO scans (patientId, riskLevel, confidenceScore, eye, resultText, recommendation)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [patientId, riskLevel, score, eye, resultText, recommendation]
+    const rightInsert = await db.run(
+      `INSERT INTO scans (patientId, patientName, patientAge, patientGender, riskLevel, confidenceScore, eye, resultText, recommendation)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [pid, patientName, patientAge, patientGender, rightResult.riskLevel, rightResult.score, 'right', rightResult.resultText, rightResult.recommendation]
     );
 
     res.json({
       success: true,
       data: {
-        id: result.lastID,
-        patientId,
-        riskLevel,
-        confidenceScore: score,
-        eye,
-        resultText,
-        recommendation,
+        patientId: pid,
+        patientName,
+        patientAge,
+        patientGender,
+        leftScanId: leftInsert.lastID,
+        rightScanId: rightInsert.lastID,
+        results: {
+          left: { ...leftResult, id: leftInsert.lastID },
+          right: { ...rightResult, id: rightInsert.lastID }
+        },
         timestamp: new Date().toISOString()
       }
     });

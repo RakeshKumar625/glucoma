@@ -12,7 +12,7 @@ export default function PrintButton() {
 
   return (
     <button className={styles.printBtn} onClick={handlePrint}>
-      <Printer size={16} /> Print Report
+      <Printer size={16} /> Download Report (PDF)
     </button>
   );
 }

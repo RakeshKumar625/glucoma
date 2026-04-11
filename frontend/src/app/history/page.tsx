@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Calendar, ScanLine, ArrowRight, Eye, LayoutDashboard, Activity, AlertTriangle, CheckCircle2, Minus } from 'lucide-react';
+import { Calendar, ScanLine, ArrowRight, Eye, LayoutDashboard, Activity, AlertTriangle, CheckCircle2, Minus, FileText } from 'lucide-react';
 import styles from './history.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -7,6 +7,9 @@ export const dynamic = 'force-dynamic';
 interface Scan {
   id: number;
   patientId: string;
+  patientName?: string;
+  patientAge?: number;
+  patientGender?: string;
   riskLevel: string;
   confidenceScore: number;
   eye: string;
@@ -121,7 +124,7 @@ export default async function HistoryPage() {
               <table className={styles.table}>
                 <thead>
                   <tr>
-                    <th>Patient ID</th>
+                    <th>Patient</th>
                     <th>Date & Time</th>
                     <th>Eye</th>
                     <th>Risk Level</th>
@@ -130,49 +133,76 @@ export default async function HistoryPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {scans.map((scan) => (
-                    <tr key={scan.id}>
-                      <td>
-                        <span className={styles.idCell}>{scan.patientId}</span>
-                      </td>
-                      <td>
-                        <div className={styles.dateCell}>
-                          <Calendar size={13} />
-                          {new Date(scan.createdAt).toLocaleString(undefined, {
-                            year: 'numeric', month: 'short', day: 'numeric',
-                            hour: '2-digit', minute: '2-digit'
-                          })}
-                        </div>
-                      </td>
-                      <td>
-                        <div className={styles.eyeCell}>
-                          <span className={styles.eyeIcon}>{scan.eye === 'left' ? 'L' : 'R'}</span>
-                          <span className={styles.eyeText}>{scan.eye.toUpperCase()}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <span className={`${styles.badge} ${getBadgeClass(scan.riskLevel)}`}>
-                          {scan.riskLevel}
-                        </span>
-                      </td>
-                      <td>
-                        <div className={styles.confWrap}>
-                          <div className={styles.confBar}>
-                            <div
-                              className={styles.confFill}
-                              style={{ width: `${scan.confidenceScore}%`, backgroundColor: getConfColor(scan.confidenceScore) }}
-                            />
+                  {scans.map((scan) => {
+                    const parseDate = (d: string) => new Date(d.includes(' ') ? d.replace(' ', 'T') + 'Z' : d);
+                    
+                    // Try to find the other eye from the same session
+                    const otherEye = scans.find(s => 
+                      s.patientId === scan.patientId && 
+                      s.id !== scan.id && 
+                      Math.abs(parseDate(s.createdAt).getTime() - parseDate(scan.createdAt).getTime()) < 10000
+                    );
+
+                    const dateObj = parseDate(scan.createdAt);
+
+                    return (
+                      <tr key={scan.id}>
+                        <td>
+                          <div style={{ display:'flex', flexDirection:'column' }}>
+                            <span style={{ fontWeight: 700, color: 'var(--foreground)' }}>{scan.patientName || 'Anonymous'}</span>
+                            <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>ID: {scan.patientId}</span>
                           </div>
-                          <span className={styles.confText}>{scan.confidenceScore}%</span>
-                        </div>
-                      </td>
-                      <td>
-                        <Link href={`/results/${scan.id}`} className={styles.viewBtn}>
-                          <Eye size={14} /> View Report
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td>
+                          <div className={styles.dateCell}>
+                            <Calendar size={13} />
+                            {dateObj.toLocaleString(undefined, {
+                              year: 'numeric', month: 'short', day: 'numeric',
+                              hour: '2-digit', minute: '2-digit'
+                            })}
+                          </div>
+                        </td>
+                        <td>
+                          <div className={styles.eyeCell}>
+                            <span className={styles.eyeIcon}>{scan.eye === 'left' ? 'L' : 'R'}</span>
+                            <span className={styles.eyeText}>{scan.eye.toUpperCase()}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span className={`${styles.badge} ${getBadgeClass(scan.riskLevel)}`}>
+                            {scan.riskLevel}
+                          </span>
+                        </td>
+                        <td>
+                          <div className={styles.confWrap}>
+                            <div className={styles.confBar}>
+                              <div
+                                className={styles.confFill}
+                                style={{ width: `${scan.confidenceScore}%`, backgroundColor: getConfColor(scan.confidenceScore) }}
+                              />
+                            </div>
+                            <span className={styles.confText}>{scan.confidenceScore}%</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className={styles.actionGroup}>
+                            <Link href={`/results/${scan.id}`} className={styles.viewBtn}>
+                              <Eye size={14} /> View Report
+                            </Link>
+                            {otherEye && (
+                              <Link 
+                                href={`/results/combined?left=${scan.eye === 'left' ? scan.id : otherEye.id}&right=${scan.eye === 'right' ? scan.id : otherEye.id}`} 
+                                className={styles.combinedBtn}
+                                title="View combined report for both eyes"
+                              >
+                                <FileText size={14} /> Combined
+                              </Link>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

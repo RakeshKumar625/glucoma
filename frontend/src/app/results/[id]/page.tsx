@@ -16,7 +16,12 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
   try {
     const res = await fetch(`http://localhost:5000/report/${id}`, { cache: 'no-store' });
     const json = await res.json();
-    if (json.success) scan = json.data;
+    if (json.success) {
+      scan = json.data;
+      if (scan.createdAt) {
+        scan.createdAt = scan.createdAt.includes(' ') ? scan.createdAt.replace(' ', 'T') + 'Z' : scan.createdAt;
+      }
+    }
   } catch (e) {
     console.error('API Error', e);
   }
@@ -85,24 +90,24 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
             <div className={styles.patientCell}>
               <div className={styles.patientCellIcon}><User size={18} /></div>
               <div>
-                <span className={styles.patientCellLabel}>Patient ID</span>
-                <span className={styles.patientCellValue}>{scan.patientId}</span>
+                <span className={styles.patientCellLabel}>Patient Name</span>
+                <span className={styles.patientCellValue}>{scan.patientName || 'Anonymous'}</span>
               </div>
             </div>
             <div className={styles.patientCell}>
-              <div className={styles.patientCellIcon}><Calendar size={18} /></div>
-              <div>
-                <span className={styles.patientCellLabel}>Scan Date</span>
-                <span className={styles.patientCellValue}>
-                  {new Date(scan.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-                </span>
-              </div>
+               <div className={styles.patientCellIcon}><Calendar size={18} /></div>
+               <div>
+                 <span className={styles.patientCellLabel}>Age / Gender</span>
+                 <span className={styles.patientCellValue}>
+                   {scan.patientAge ? `${scan.patientAge}Y` : 'N/A'} • {scan.patientGender || 'N/A'}
+                 </span>
+               </div>
             </div>
             <div className={styles.patientCell}>
               <div className={styles.patientCellIcon}><FileText size={18} /></div>
               <div>
-                <span className={styles.patientCellLabel}>Assessment Type</span>
-                <span className={styles.patientCellValue}>Full Fundus AI Scan</span>
+                <span className={styles.patientCellLabel}>Patient ID</span>
+                <span className={styles.patientCellValue}>{scan.patientId}</span>
               </div>
             </div>
             <div className={styles.patientCell}>
