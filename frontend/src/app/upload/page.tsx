@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { UploadCloud, Image as ImageIcon, AlertCircle, Loader2, ArrowRight, ShieldCheck, Zap, Clock, Eye, User, Info, Users, Hash, Calendar as CalendarIcon } from 'lucide-react';
+import { UploadCloud, AlertCircle, Loader2, ArrowRight, Zap, Eye, User, Info, Users, Hash, Calendar as CalendarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import styles from './upload.module.css';
 import { API_ENDPOINTS } from '@/config/api';
@@ -93,8 +93,9 @@ export default function UploadPage() {
       
       // Redirect to combined report
       setTimeout(() => router.push(`/results/combined?left=${result.data.leftScanId}&right=${result.data.rightScanId}`), 400);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred. Check if the backend server is active.');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred. Check if the backend server is active.';
+      setError(errorMessage);
       setIsLoading(false);
     }
   };
@@ -225,6 +226,7 @@ export default function UploadPage() {
                 ) : (
                   <div className={styles.previewContainer}>
                     <div className={styles.imageFrame}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={leftPreview} alt="Left eye scan" className={styles.previewImage} />
                       {isLoading && <div className={styles.scanningOverlay}><div className={styles.scannerLine}></div></div>}
                     </div>
@@ -259,6 +261,7 @@ export default function UploadPage() {
                 ) : (
                   <div className={styles.previewContainer}>
                     <div className={styles.imageFrame}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={rightPreview} alt="Right eye scan" className={styles.previewImage} />
                       {isLoading && <div className={styles.scanningOverlay}><div className={styles.scannerLine}></div></div>}
                     </div>

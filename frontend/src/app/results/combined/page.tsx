@@ -3,7 +3,7 @@ import {
   ChevronLeft, Activity, 
   User, Calendar, FileText, 
   AlertTriangle, CheckCircle2, TrendingUp, 
-  Stethoscope, Info, Eye, Download, Printer
+  Stethoscope, Info, Eye
 } from 'lucide-react';
 import styles from './combined.module.css';
 import PrintButton from '@/components/PrintButton';
@@ -11,7 +11,20 @@ import { API_ENDPOINTS } from '@/config/api';
 
 export const dynamic = 'force-dynamic';
 
-async function getScan(id: string) {
+interface Scan {
+  patientId: string;
+  patientName?: string;
+  patientAge?: number;
+  patientGender?: string;
+  riskLevel: string;
+  confidenceScore: number;
+  eye: string;
+  resultText: string;
+  recommendation: string;
+  createdAt: string;
+}
+
+async function getScan(id: string): Promise<Scan | null> {
   try {
     const res = await fetch(API_ENDPOINTS.REPORT(id), { cache: 'no-store' });
     const contentType = res.headers.get("content-type");
@@ -25,7 +38,7 @@ async function getScan(id: string) {
       json.data.createdAt = rawDate.includes(' ') ? rawDate.replace(' ', 'T') + 'Z' : rawDate;
     }
     return json.success ? json.data : null;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -73,7 +86,7 @@ export default async function CombinedResultPage({ searchParams }: { searchParam
     summaryType = 'warning';
   }
 
-  const renderEyeDetail = (scan: any, side: string) => {
+  const renderEyeDetail = (scan: Scan, side: string) => {
     const isDanger = scan.riskLevel === 'High Risk';
     const isWarning = scan.riskLevel === 'Moderate Risk';
     const riskColor = isDanger ? '#b91c1c' : isWarning ? '#b45309' : '#15803d';
