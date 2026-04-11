@@ -10,10 +10,24 @@ import styles from './results.module.css';
 import PrintButton from '@/components/PrintButton';
 import { API_ENDPOINTS } from '@/config/api';
 
+interface Scan {
+  id: number;
+  patientId: string;
+  patientName?: string;
+  patientAge?: number;
+  patientGender?: string;
+  riskLevel: string;
+  confidenceScore: number;
+  eye: string;
+  resultText: string;
+  recommendation: string;
+  createdAt: string;
+}
+
 export default async function ResultPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  let scan: any = null;
+  let scan: Scan | null = null;
   try {
     const res = await fetch(API_ENDPOINTS.REPORT(id), { cache: 'no-store' });
     const json = await res.json();
@@ -23,8 +37,8 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
         scan.createdAt = scan.createdAt.includes(' ') ? scan.createdAt.replace(' ', 'T') + 'Z' : scan.createdAt;
       }
     }
-  } catch (e) {
-    console.error('API Error', e);
+  } catch {
+    console.error('API Error');
   }
 
   if (!scan) {

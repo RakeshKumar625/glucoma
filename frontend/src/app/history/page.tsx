@@ -25,8 +25,8 @@ export default async function HistoryPage() {
     const res = await fetch(API_ENDPOINTS.HISTORY, { cache: 'no-store' });
     const json = await res.json();
     if (json.success) scans = json.data;
-  } catch (e) {
-    console.error('Failed to get scans', e);
+  } catch {
+    console.error('Failed to get scans');
   }
 
   const highRisk   = scans.filter(s => s.riskLevel === 'High Risk').length;
