@@ -10,6 +10,7 @@ import { API_ENDPOINTS } from '@/config/api';
 export const dynamic = 'force-dynamic';
 
 interface Scan {
+  id: number;
   patientId: string;
   patientName?: string;
   patientAge?: number;
@@ -19,6 +20,8 @@ interface Scan {
   eye: string;
   resultText: string;
   recommendation: string;
+  reasons?: string | string[];
+  summary?: string;
   createdAt: string;
 }
 
@@ -91,6 +94,16 @@ export default async function CombinedResultPage({ searchParams }: { searchParam
     const isDanger = scan.riskLevel === 'High Risk';
     const isWarning = scan.riskLevel === 'Moderate Risk';
     const riskColor = isDanger ? '#b91c1c' : isWarning ? '#b45309' : '#15803d';
+    const riskBg = isDanger ? '#fef2f2' : isWarning ? '#fffbeb' : '#f0fdf4';
+
+    let parsedReasons: string[] = [];
+    if (scan.reasons) {
+      if (typeof scan.reasons === 'string') {
+        try { parsedReasons = JSON.parse(scan.reasons); } catch { parsedReasons = [scan.reasons]; }
+      } else if (Array.isArray(scan.reasons)) {
+        parsedReasons = scan.reasons;
+      }
+    }
 
     return (
       <div className={styles.eyeDetailCard}>
@@ -105,7 +118,18 @@ export default async function CombinedResultPage({ searchParams }: { searchParam
           <span className={styles.eyeDetailLabel}>Confidence Level:</span>
           <span className={styles.eyeDetailValue}>{scan.confidenceScore}%</span>
         </div>
-        <div className={styles.eyeDetailRow} style={{ marginTop: '0.5rem', display: 'block' }}>
+        
+        {parsedReasons.length > 0 && (
+          <div className={styles.miniReasons}>
+             {parsedReasons.map((r, i) => (
+               <div key={i} className={styles.miniReason}>
+                 {isDanger ? '❗' : isWarning ? '⚠' : '✔'} {r}
+               </div>
+             ))}
+          </div>
+        )}
+
+        <div className={styles.eyeDetailRow} style={{ marginTop: '0.75rem', display: 'block' }}>
           <span className={styles.eyeDetailLabel}>Findings:</span>
           <p className={styles.eyeDetailText}>{scan.resultText}</p>
         </div>

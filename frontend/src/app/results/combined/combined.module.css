@@ -178,6 +178,23 @@
   margin-top: 4px;
 }
 
+.miniReasons {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.miniReason {
+  font-size: 0.78rem;
+  color: #1e293b;
+  background: #f8fafc;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  font-weight: 500;
+}
+
 /* ─── Summary Box ────────────────────────────────── */
 .summaryBox {
   padding: 1.5rem;

@@ -21,6 +21,8 @@ interface Scan {
   eye: string;
   resultText: string;
   recommendation: string;
+  reasons?: string | string[];
+  summary?: string;
   createdAt: string;
 }
 
@@ -63,9 +65,23 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
 
   const reportCode = `GLC-${String(scan.id).padStart(6, '0')}`;
 
+  // Parse reasons if they come as a JSON string
+  let parsedReasons: string[] = [];
+  if (scan.reasons) {
+    if (typeof scan.reasons === 'string') {
+      try {
+        parsedReasons = JSON.parse(scan.reasons);
+      } catch {
+        parsedReasons = [scan.reasons];
+      }
+    } else if (Array.isArray(scan.reasons)) {
+      parsedReasons = scan.reasons;
+    }
+  }
+
   return (
     <div className={styles.pageShell}>
-      <div className={`${styles.inner} animate-in`}>
+      <div className={`${styles.inner} ${styles.animateIn}`}>
 
         {/* Top Nav */}
         <div className={styles.topNav}>
@@ -185,9 +201,9 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
             <div className={styles.findingsGrid}>
               <div className={styles.findingsBox}>
                 <div className={styles.findingsBoxTitle}>
-                  <Info size={14} /> AI Findings
+                  <Info size={14} /> AI Findings Preview
                 </div>
-                <p className={styles.findingsText}>{scan.resultText}</p>
+                <p className={styles.findingsText}>{scan.resultText || 'Initial analysis complete.'}</p>
               </div>
               <div className={styles.findingsBox}>
                 <div className={styles.findingsBoxTitle}>
@@ -198,6 +214,36 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
                 </div>
               </div>
             </div>
+
+            {/* Why this result? (Reasons) */}
+            {parsedReasons.length > 0 && (
+              <div className={styles.reasonsSection}>
+                <h3 className={styles.reasonsTitle}>
+                  <Info size={20} className={styles.reasonsTitleIcon} />
+                  Why is this classified as {scan.riskLevel}?
+                </h3>
+                <div className={styles.reasonsGrid}>
+                  {parsedReasons.map((reason, idx) => (
+                    <div key={idx} className={styles.reasonCard} style={{ borderLeft: `3px solid ${riskColor}` }}>
+                      <div className={styles.reasonIcon}>
+                        {isSafe ? <CheckCircle2 size={16} color="var(--success)" /> : 
+                         isWarning ? <TrendingUp size={16} color="var(--warning)" /> : 
+                         <AlertTriangle size={16} color="var(--danger)" />}
+                      </div>
+                      <span className={styles.reasonText}>{reason}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Summary Section */}
+            {scan.summary && (
+              <div className={styles.summaryBox} style={{ borderLeftColor: riskColor, background: riskBg + '22' }}>
+                <span className={styles.summaryTitle} style={{ color: riskColor }}>Detailed Analysis Summary</span>
+                <p className={styles.summaryText}>{scan.summary}</p>
+              </div>
+            )}
           </div>
 
           {/* Disclaimer */}
