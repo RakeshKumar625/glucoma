@@ -272,16 +272,19 @@ Ramgarh Engineering College<br />
 <td align="center">
 <b>Mukesh Kumar Bauri</b><br />
 Bachelor's in Computer Science & Engineering<br />
+Ramgarh Engineering College<br />
 <a href="https://github.com/Mukesh-219">GitHub</a> · <a href="https://www.linkedin.com/in/mukesh-bauri-626a3523a/">LinkedIn</a>
 </td>
 <td align="center">
 <b>Jigisha Diksha</b><br />
 Bachelor's in Computer Science & Engineering<br />
+Ramgarh Engineering College<br />
 <a href="https://github.com/Jigisha-Diksha">GitHub</a> · <a href="https://www.linkedin.com/in/jigisha-diksha-240a53372/">LinkedIn</a>
 </td>
 <td align="center">
 <b>Sikha Kumari</b><br />
 Bachelor's in Computer Science & Engineering<br />
+Ramgarh Engineering College<br />
 <a href="https://github.com/Sikha-kumari-git">GitHub</a> · <a href="https://www.linkedin.com/in/sikha-kumari-softwaredeveloper/">LinkedIn</a>
 </td>
 </tr>
