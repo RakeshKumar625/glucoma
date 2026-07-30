@@ -28,17 +28,17 @@
 
 ## Protecting Vision Through Intelligent Early Screening
 
-A modern healthcare platform designed to make preliminary glaucoma risk screening faster, smarter, and more accessible through an intuitive full-stack web application.
+*A modern healthcare platform designed to make preliminary glaucoma risk screening faster, smarter, and more accessible through an intuitive full-stack web application.*
 
 ### 🌐 Live Links
 
-🚀 *Live Demo*  
+🚀 **Live Demo**  
 https://glucoma-gamma.vercel.app
 
-💻 *GitHub Repository*  
+💻 **GitHub Repository**  
 https://github.com/RakeshKumar625/glucoma
 
-🏆 *TechExpo IIT Guwahati Submission*
+🏆 **TechExpo IIT Guwahati Submission**
 
 ---
 
@@ -75,7 +75,7 @@ https://github.com/RakeshKumar625/glucoma
 
 # 🌍 Project Overview
 
-GlaucoVision is a modern healthcare-focused web application developed to support the *early screening of glaucoma*, one of the world's leading causes of irreversible blindness.
+GlaucoVision is a modern healthcare-focused web application developed to support the **early screening of glaucoma**, one of the world's leading causes of irreversible blindness.
 
 The application enables users to upload retinal fundus images and instantly receive a structured glaucoma risk assessment through a clean, responsive dashboard.
 
@@ -85,7 +85,7 @@ The platform demonstrates how modern web technologies can improve healthcare acc
 
 ---
 
-# 👁️ Why Glaucoma Matters
+# 👁 Why Glaucoma Matters
 
 According to the World Health Organization, glaucoma affects millions of people worldwide and remains one of the primary causes of permanent vision loss.
 
@@ -175,7 +175,7 @@ The current implementation demonstrates the complete workflow using a modular an
 
 ---
 
-# 🛠️ Technology Stack
+# 🛠 Technology Stack
 
 | Layer | Technology |
 |---------|------------|
@@ -221,11 +221,11 @@ The primary objectives of GlaucoVision are:
 
 ---
 
-# ⚠️ Medical Disclaimer
+# ⚠ Medical Disclaimer
 
 GlaucoVision is intended solely for educational, research, and prototype demonstration purposes.
 
-The current implementation is *not a clinically validated diagnostic system* and should not be used as a substitute for professional medical advice, diagnosis, or treatment.
+The current implementation is **not a clinically validated diagnostic system** and should not be used as a substitute for professional medical advice, diagnosis, or treatment.
 
 Always consult a qualified ophthalmologist regarding any eye-related medical concerns.
 
@@ -234,7 +234,7 @@ Always consult a qualified ophthalmologist regarding any eye-related medical con
 
 GlaucoVision follows a modular full-stack architecture that separates the presentation layer, backend services, database, and analysis engine. This design makes the application scalable, maintainable, and ready for future AI integration.
 
-mermaid
+```mermaid
 flowchart LR
 
 A[👤 User]
@@ -256,7 +256,7 @@ F --> G
 G --> I
 F --> H
 I --> H
-
+```
 
 ---
 
@@ -312,7 +312,7 @@ The current application demonstrates the complete healthcare workflow using a mo
 
 Pipeline:
 
-text
+```text
 Retina Image
 
 ↓
@@ -342,7 +342,7 @@ Database Storage
 ↓
 
 Dashboard
-
+```
 
 ---
 
@@ -352,7 +352,7 @@ The existing architecture has been intentionally designed so that the analysis l
 
 Future pipeline:
 
-text
+```text
 Retina Image
 
 ↓
@@ -386,11 +386,11 @@ Risk Report
 ↓
 
 Dashboard
-
+```
 
 ---
 
-# 🗄️ Database Design
+# 🗄 Database Design
 
 SQLite stores all scan records.
 
@@ -446,26 +446,26 @@ SQLite stores all scan records.
 
 POST
 
-
+```
 /api/analyze
-
+```
 
 Request
 
-json
+```json
 {
   "image":"retina.jpg"
 }
-
+```
 
 Response
 
-json
+```json
 {
   "risk":"Moderate",
   "confidence":"92%"
 }
-
+```
 
 ---
 
@@ -473,13 +473,13 @@ json
 
 GET
 
-
+```
 /api/history
-
+```
 
 Response
 
-json
+```json
 [
  {
    "id":1,
@@ -487,7 +487,7 @@ json
    "confidence":"81%"
  }
 ]
-
+```
 
 ---
 
@@ -495,9 +495,9 @@ json
 
 DELETE
 
-
+```
 /api/history/:id
-
+```
 
 ---
 
@@ -505,23 +505,23 @@ DELETE
 
 GET
 
-
+```
 /api/health
-
+```
 
 Response
 
-json
+```json
 {
  "status":"running"
 }
-
+```
 
 ---
 
 # 📂 Folder Structure
 
-text
+```text
 GlaucoVision/
 
 │
@@ -555,41 +555,41 @@ GlaucoVision/
 ├── README.md
 ├── LICENSE
 └── .gitignore
-
+```
 
 ---
 
-# ⚙️ Installation Guide
+# ⚙ Installation Guide
 
 ## Clone Repository
 
-bash
+```bash
 git clone https://github.com/RakeshKumar625/glucoma.git
-
+```
 
 Move inside the project
 
-bash
+```bash
 cd glucoma
-
+```
 
 ---
 
 ## Backend
 
-bash
+```bash
 cd backend
 
 npm install
 
 npm start
-
+```
 
 Backend runs at
 
-
+```
 http://localhost:5000
-
+```
 
 ---
 
@@ -597,19 +597,19 @@ http://localhost:5000
 
 Open another terminal
 
-bash
+```bash
 cd frontend
 
 npm install
 
 npm run dev
-
+```
 
 Frontend runs at
 
-
+```
 http://localhost:3000
-
+```
 
 ---
 
@@ -617,21 +617,21 @@ http://localhost:3000
 
 Backend
 
-env
+```env
 PORT=5000
 
 DATABASE_URL=./database.sqlite
-
+```
 
 Frontend
 
-env
+```env
 NEXT_PUBLIC_API_URL=http://localhost:5000
-
+```
 
 ---
 
-# ▶️ Usage
+# ▶ Usage
 
 1. Open the application.
 2. Upload a retina fundus image.
@@ -667,9 +667,9 @@ Add a short GIF demonstrating:
 - Viewing history
 - Dashboard navigation
 
-text
+```text
 docs/demo.gif
-
+```
 
 ---
 
@@ -958,7 +958,7 @@ Special thanks to everyone contributing to accessible healthcare through technol
 
 # 📄 License
 
-This project is licensed under the *MIT License*.
+This project is licensed under the **MIT License**.
 
 You are free to:
 
@@ -971,11 +971,11 @@ Please retain the original license notice.
 
 ---
 
-# ⚠️ Medical Disclaimer
+# ⚠ Medical Disclaimer
 
 GlaucoVision is intended for educational, research, and prototype demonstration purposes only.
 
-It is *not a clinically validated medical device* and should *not* be used as the sole basis for diagnosis or treatment decisions.
+It is **not a clinically validated medical device** and should **not** be used as the sole basis for diagnosis or treatment decisions.
 
 Always consult a qualified ophthalmologist for medical advice.
 
@@ -985,15 +985,15 @@ Always consult a qualified ophthalmologist for medical advice.
 
 For collaboration, feedback, or questions:
 
-*📧 Email*
+**📧 Email**
 
 rakeshmahto625@gmail.com
 
-*🐙 GitHub*
+**🐙 GitHub**
 
 https://github.com/RakeshKumar625
 
-*💼 LinkedIn*
+**💼 LinkedIn**
 
 https://linkedin.com/in/rakesh-kumar-data-science
 
@@ -1019,12 +1019,12 @@ Every contribution helps make digital healthcare more accessible.
 
 ### Protecting Vision Through Intelligent Early Screening
 
-*Built with ❤️ using Next.js, React, Express.js, SQLite & Open Source Technologies*
+**Built with ❤️ using Next.js, React, Express.js, SQLite & Open Source Technologies**
 
 ---
 
 ### "Early Detection Today. Better Vision Tomorrow."
 
-⭐ *Thank you for visiting this repository!*
+⭐ **Thank you for visiting this repository!**
 
 </div>
