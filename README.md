@@ -4,7 +4,7 @@
 ### AI-Powered Early Glaucoma Risk Screening Platform
 
 <p align="center">
-<img src="Screenshot 2026-07-30 131730.png" alt="GlaucoVision Banner" width="100%">
+<img src="img_src/Home.png" alt="GlaucoVision Banner" width="100%">
 </p>
 
 <p align="center">
