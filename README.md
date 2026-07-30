@@ -649,11 +649,10 @@ Replace the placeholders below with actual screenshots before submission.
 
 | Screen | Preview |
 |---------|---------|
-| Home Page | docs/screenshots/home.png |
-| Upload Page | docs/screenshots/upload.png |
-| Analysis Result | docs/screenshots/result.png |
-| Dashboard | docs/screenshots/dashboard.png |
-| History | docs/screenshots/history.png |
+| Home Page | img_src/home.jpeg |
+| Upload Page | img_src/Upload Page.jpeg |
+| Analysis Result | img_src/Analysis.jpeg |
+| History | img_src/History.jpeg |
 
 ---
 
