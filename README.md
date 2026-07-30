@@ -390,55 +390,6 @@ Dashboard
 
 ---
 
-# 🗄 Database Design
-
-SQLite stores all scan records.
-
-## Scan Table
-
-| Field | Type |
-|--------|------|
-| id | INTEGER |
-| image_name | TEXT |
-| risk_level | TEXT |
-| confidence | REAL |
-| created_at | TIMESTAMP |
-
----
-
-## Future Tables
-
-### Users
-
-| Field | Type |
-|--------|------|
-| id | INTEGER |
-| name | TEXT |
-| email | TEXT |
-| password | TEXT |
-
----
-
-### Reports
-
-| Field | Type |
-|--------|------|
-| report_id | INTEGER |
-| patient_id | INTEGER |
-| diagnosis | TEXT |
-| created_at | TIMESTAMP |
-
----
-
-### Doctors
-
-| Field | Type |
-|--------|------|
-| id | INTEGER |
-| hospital | TEXT |
-| specialization | TEXT |
-
----
 
 # 🔌 REST API Documentation
 
