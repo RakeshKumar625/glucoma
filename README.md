@@ -202,9 +202,9 @@ The current implementation demonstrates the complete workflow using a modular an
 | Dashboard | ✅ Completed |
 | Scan History | ✅ Completed |
 | Deployment | ✅ Live |
-| Authentication | 🚧 Planned |
-| CNN Model | 🚧 Planned |
-| Explainable AI | 🚧 Planned |
+| Authentication | Under Progress |
+| CNN Model | Partially Complete |
+| Explainable AI | In Progress |
 | Mobile App | 🚧 Planned |
 
 ---
